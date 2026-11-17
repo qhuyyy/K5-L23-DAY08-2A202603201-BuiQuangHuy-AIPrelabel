@@ -6,10 +6,13 @@
 
 | Lớp | Model + cỡ | Ngưỡng | Vì sao (dẫn `run_id` trong `model_log.csv`) |
 |---|---|---|---|
-| person / bicycle / motorbike / car / bus / truck | <<YOLO26m>> | <<theo lớp, từ threshold_sweep>> | <<>> |
-| three_wheeler | <<YOLOE-26s, prompt: ...>> | <<>> | <<>> |
+| person | YOLO26m (r02, r06) | 0.15 | <<vì sao>> |
+| motorbike | YOLO26m (r02, r06) | 0.2 | <<vì sao>> |
+| car | YOLO26m (r02, r06) | 0.4 | <<vì sao>> |
+| bicycle / bus / truck | YOLO26m (r02, r06) | 0.3 (mặc định) | gold chỉ có 2 / 1 / 0 vật (< 5), không đủ để chọn ngưỡng riêng (`threshold_sweep.md`) |
+| three_wheeler | YOLOE-26s, prompt: `tuk-tuk`, `cyclo`, `cargo tricycle` (r04, r07) | 0.15 (script gợi ý) | <<vì sao>> |
 
-- Lệnh `merge_prelabels.py` đã dùng (dán nguyên): <<>>
+- Lệnh `merge_prelabels.py` đã dùng (dán nguyên): `python scripts/merge_prelabels.py work/prelabel/yoloe_all/pre.coco.json work/prelabel/y26_all/pre.coco.json --thr "person=0.15,motorbike=0.2,car=0.4,three_wheeler=0.15" --conf 0.3 --iou 0.6 --split "batch,gold" --out work/prelabel/merged_review/pre.coco.json` → 759 box (28 ảnh batch + gold); sau đó `inject_traps.py --student "2A202603201"` cài 12 bẫy.
 - **Phiên bản SAM bạn chọn** (SAM 1 / 2.1 / 3) và lý do: <<chất lượng mask, tốc độ, RAM, quyền truy cập>>
 - Lỗi nào **không sửa được bằng đổi ngưỡng** (ví dụ tuk-tuk bị gọi `car`)? Sửa thế nào? <<>>
 - Box **điểm cao mà sai** hoặc **điểm thấp mà đúng** (ảnh nào): <<>>
