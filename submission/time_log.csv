@@ -1,2 +1,3 @@
 step,images,minutes,note
 gold_manual,4,27,"gán tay 4 ảnh gold (001 012 020 036) trong CVAT, không dùng AI; lần đầu 78 box"
+gold_fix,4,2,"sửa gold sau validate_labels: xoá 5 box < 20 px (img_001 3 bicycle; img_020 2 person), giữ person nhỏ ở img_001 và img_036"
