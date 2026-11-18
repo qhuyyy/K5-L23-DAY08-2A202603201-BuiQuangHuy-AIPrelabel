@@ -32,7 +32,7 @@
 
 ## 3. Thiên kiến tự động hóa và ảnh bẫy
 
-- Bắt bẫy: 9/12 = 75.0% (KTC 95%: 47–91%, dưới ngưỡng 80%); loại nào lọt: extra 1/3 (img_006: box `truck` giả), loose 1/3 (img_025: box `motorbike` bị kéo lệch), wrong_class 1/3 (img_008: `person` bị đổi thành `bicycle`); missing bắt 3/3; vì sao (bạn đã bỏ bước nào của checklist)? <<>>
+- Bắt bẫy: 9/12 = 75.0% (KTC 95%: 47–91%, dưới ngưỡng 80%); loại nào lọt: extra 1/3 (img_006: box `truck` giả), loose 1/3 (img_025: box `motorbike` bị kéo lệch), wrong_class 1/3 (img_008: `person` bị đổi thành `bicycle`); missing bắt 3/3; *(Số đo trên là của lần duyệt đầu, trước khi mở `traps_key.json`. Sau khi export và xem đáp án, tôi đã sửa 3 bẫy lọt (img_006 xoá box `truck` giả; img_008 đổi lại `person`; img_025 siết box `motorbike`). Bản sửa nằm trong `labels/qc_fixed.json` và chỉ được dùng cho `release/`; `batch_reviewed.json` và `review_stats.*` giữ nguyên lần duyệt đầu để số bắt bẫy không bị thổi phồng.)* vì sao (bạn đã bỏ bước nào của checklist)? <<>>
 - Accepted cao mà bắt bẫy thấp (hoặc ngược lại) nói gì về cách bạn duyệt? <<>>
 
 ## 4. Máy có đáng dùng không?
@@ -79,5 +79,6 @@ Nếu Rework / Hold, việc cần làm tiếp: <<>>
 - Gold có bị nhiễm không (bạn có nhìn pre-label hay hỏi AI trước khi gán xong)? Không: chưa chạy model nào trước khi export gold. Sau lần export đầu (78 box), `validate_labels` cảnh báo 8 box cao < 20 px; tôi xem lại ảnh, xoá 5 box (img_001: 3 bicycle; img_020: 2 person), giữ 3 person nhỏ (img_001: 2, img_036: 1) vì vẫn nhìn rõ là người (ca khó, xem CAL-01). Sửa mất 2 phút (`time_log.csv` dòng `gold_fix`). Gold cuối: 73 box.
 - Máy / GPU / CVAT dùng; vướng mắc cài đặt: Windows 11 Home, không GPU (torch 2.15 CPU), Python 3.12.10 trong venv riêng (Python mặc định của máy là 3.14, ngoài khoảng 3.10–3.13 nên không dùng); ultralytics 8.4.215; model: yolo26m (tải thêm bằng `download_models.py --set core`), yolo26s, yoloe-26s-seg, sam2.1_b, mobile_sam; chạy hết trên CPU, không cần Colab (yolo26m ~0.9–1.2 s/ảnh, YOLOE ~0.4 s/ảnh, YOLO26+SAM 2.1 ~8.4 s/ảnh); CVAT v2.82.1 chạy bằng Docker (dùng lại stack CVAT có sẵn từ các lab trước thay vì bản 2.81.0 để không hạ cấp database). <<vướng mắc khác nếu có>>
 - Dùng cache `data/cache/` thay vì tự chạy? Không: tự chạy `y26_all` và `yoloe_all` trên máy (CPU).
+- Sửa nhãn sau khi xem đáp án bẫy: 3 bẫy lọt được sửa vào `labels/qc_fixed.json` (dùng cho release), không chạy lại `review_stats`; xem mục 3.
 - Lỗi / bug script đã gặp (nếu có): <<>>
 - Một điều bạn làm khác lần sau: <<>>
