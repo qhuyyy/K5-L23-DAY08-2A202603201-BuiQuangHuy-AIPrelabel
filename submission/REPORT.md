@@ -22,22 +22,22 @@
 
 | Trạng thái | Số | Tỉ lệ | Mẫu số |
 |---|---|---|---|
-| accepted | <<>> | <<>> | <<box máy>> |
-| edited | <<>> | <<>> | <<>> |
-| deleted | <<>> | <<>> | <<>> |
-| added | <<>> | <<>> | <<đối tượng sau duyệt>> |
+| accepted | 493 | 75.3% | 655 box máy (đã loại 25 đối tượng quanh bẫy) |
+| edited | 66 | 10.1% | 655 box máy |
+| deleted | 96 | 14.7% | 655 box máy |
+| added | 97 (12 là đổi lớp → máy sót thật ≈ 85) | 14.8% | 656 đối tượng sau duyệt |
 
 - Lớp nào máy tệ nhất? Vì sao (dẫn ảnh)? <<>>
-- So với gold: precision / recall của **máy** <<>> (mẫu số: <<đối tượng gold>>)
+- So với gold: precision / recall của **máy** 55/80 = 68.8% (KTC 95%: 58–78%) / 55/71 = 77.5% (KTC 95%: 66–86%) (mẫu số: 71 đối tượng gold, không tính ignore_region; 80 box máy trên 4 ảnh gold)
 
 ## 3. Thiên kiến tự động hóa và ảnh bẫy
 
-- Bắt bẫy: <<.../12>>; loại nào lọt: <<>>; vì sao (bạn đã bỏ bước nào của checklist)? <<>>
+- Bắt bẫy: 9/12 = 75.0% (KTC 95%: 47–91%, dưới ngưỡng 80%); loại nào lọt: extra 1/3 (img_006: box `truck` giả), loose 1/3 (img_025: box `motorbike` bị kéo lệch), wrong_class 1/3 (img_008: `person` bị đổi thành `bicycle`); missing bắt 3/3; vì sao (bạn đã bỏ bước nào của checklist)? <<>>
 - Accepted cao mà bắt bẫy thấp (hoặc ngược lại) nói gì về cách bạn duyệt? <<>>
 
 ## 4. Máy có đáng dùng không?
 
-- Thời gian (từ `time_log.csv`): gán tay <<... phút/ảnh>> vs duyệt <<... phút/ảnh>>. Thiên lệch (bạn gán gold trước nên đã quen cảnh): <<>>
+- Thời gian (từ `time_log.csv`): gán tay 27/4 = 6.75 phút/ảnh (29/4 = 7.25 nếu tính 2 phút sửa gold) vs duyệt 60/24 = 2.5 phút/ảnh. Thiên lệch (bạn gán gold trước nên đã quen cảnh): <<>>
 - Kết luận: <<có / không / chỉ cho lớp nào>>, dựa trên <<số liệu>>
 - **Ba quy tắc giảm thiên kiến của bạn** (mỗi quy tắc kiểm tra được bằng số hoặc việc làm):
   1. <<>>
@@ -48,7 +48,10 @@
 
 | Ảnh | SAM (phiên bản) | Số click | Mask gồm người lái / hàng hoá? | Lỗi quan sát | File trong `masks/` |
 |---|---|---|---|---|---|
-| <<img_0xx>> | <<>> | <<>> | <<>> | <<>> | <<>> |
+| img_013 (tuk-tuk) | SAM 2.1 b (`sam2.1_b.pt`) | 2 dương + 1 âm (click âm đặt trên người lái) | <<>> | <<>> | `tuktuk_img013.jpg` |
+| img_003 (xe ba bánh bán hoa quả) | SAM 2.1 b | 1 dương + 1 box | <<>> | <<>> | `three_wheeler_img003.jpg` |
+| img_017 (tuk-tuk, lần 1) | SAM 2.1 b | 1 dương, không box | <<>> | <<>> | `three_wheeler_img017.jpg` |
+| img_017 (tuk-tuk, lần 2) | SAM 2.1 b | 3 dương + 1 box | <<>> | <<>> | `three_wheeler_img017_box.jpg` |
 
 - Đối chiếu guideline mục 4.2: quy tắc nào giúp, quy tắc nào thiếu? <<>>
 - *(Tuỳ chọn)* Interactor SAM trong CVAT: làm được / không (lỗi gì, đã thử gì); khác gì offline: <<>>
