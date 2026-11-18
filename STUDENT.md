@@ -5,7 +5,7 @@
 - Lớp (L2 / L3 / khác): L2
 - Tài khoản GitHub: qhuyyy
 - Repo bài nộp (URL): https://github.com/qhuyyy/K5-L23-Day08-2A202603201-BuiQuangHuy-AI-Assisted-Labeling
-- Commit chốt bài (hash): <<>>
+- Commit chốt bài (hash): bc0a0a3
 - Máy: Windows 11 Home, không GPU (CPU; torch 2.15.0+cpu), Python 3.12.10 (venv)
 - CVAT (Docker): v2.82.1
 
