@@ -64,10 +64,10 @@
 
 ## 7. QC và quyết định (Part 6)
 
-- Mẫu: <<n>> ảnh (<<m>> ảnh `can_review` + <<k>> ngẫu nhiên, seed 42); người kiểm: bạn (**hạn chế**: bạn vừa là người duyệt).
-- Lỗi theo **đối tượng**: <<.../... = ...%>> · theo **ảnh**: <<.../... = ...%>> (ngưỡng Release ≤ 2%)
-- Top lỗi (trong: bỏ sót, thừa, sai lớp, sai vị trí/kích thước, sai thuộc tính, sai mask) + một ảnh ví dụ mỗi loại: <<>>
-- **Giới hạn mẫu nhỏ** (cận trên 95% trong `qc_report_auto.md`): <<>>
+- Mẫu: 3 ảnh (0 ảnh `can_review` + 3 ngẫu nhiên, seed 42: img_003, img_006, img_031; 68 đối tượng; giảm từ 5 xuống 3 ảnh do thiếu thời gian, theo GUIDE "nếu bị trễ giờ"); người kiểm: tôi (**hạn chế**: tôi vừa là người duyệt).
+- Lỗi theo **đối tượng**: 6/68 = 8.8% · theo **ảnh**: 3/3 = 100% (ngưỡng Release ≤ 2%)
+- Top lỗi (trong: bỏ sót, thừa, sai lớp, sai vị trí/kích thước, sai thuộc tính, sai mask) + một ảnh ví dụ mỗi loại: thừa 3/6 (img_003 #18 box truck trùng; img_006 #91 box motorbike trùng; img_031 #574 box person trên áo khoác treo), sai vị trí/kích thước 2/6 (img_003 #6 box person chỉ bao đầu; img_006 #111 box motorbike quá rộng), sai lớp 1/6 (img_003 #20). Không có bỏ sót trong mẫu.
+- **Giới hạn mẫu nhỏ** (cận trên 95% trong `qc_report_auto.md`): 3/3 ảnh lỗi, cận trên 95% (Wilson) = 100%; với 3 ảnh thì kể cả 0 lỗi cũng chỉ cho cận trên 56%, nên mẫu này không thể chứng minh ngưỡng ≤ 2%. <<nhận xét thêm của bạn>>
 - Script kiểm được / không kiểm được (ví dụ ôm sát, cùng bỏ sót với máy, theo checklist thật): <<>>
 
 **Quyết định: <<Release / Hold / Rework>>**, ngày <<YYYY-MM-DD>>. Lý do (đi theo Hold → Rework → Release): <<>>
