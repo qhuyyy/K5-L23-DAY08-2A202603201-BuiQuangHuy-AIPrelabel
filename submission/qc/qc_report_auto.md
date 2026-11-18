@@ -18,9 +18,8 @@
 ## Top 3 loại lỗi
 | Loại lỗi | Số lỗi | Ảnh ví dụ |
 |---|---|---|
-| thua | 3 | img_003.jpg, img_006.jpg, img_031.jpg |
+| thua | 4 | img_003.jpg, img_006.jpg, img_031.jpg |
 | sai_vi_tri_kich_thuoc | 2 | img_003.jpg, img_006.jpg |
-| sai_lop | 1 | img_003.jpg |
 
 **Lỗi hệ thống**: 'thua' lặp lại -> sửa quy tắc / recipe, không chỉ sửa từng ảnh.
 
@@ -31,7 +30,7 @@
 **REWORK**
 
 - ảnh có lỗi 100.0% > 2%
-- lỗi hệ thống: 'thua' chiếm 3/6 lỗi
+- lỗi hệ thống: 'thua' chiếm 4/6 lỗi
 - bắt bẫy 75% < 80% -> lô duyệt chưa đáng tin
 
 Cây quyết định: Hold (guideline chưa rõ / dữ liệu hỏng) -> Rework (> ngưỡng, lỗi lặp, bắt bẫy / nhất quán thấp) -> Release.

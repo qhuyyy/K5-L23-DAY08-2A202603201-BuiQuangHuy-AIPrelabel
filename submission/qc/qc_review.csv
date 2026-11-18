@@ -1,5 +1,5 @@
 ﻿image,object_id,error_type,reviewer,note
-img_003.jpg,20,sai_lop,Huy,"vật chỉ nhìn thấy một phần, không thể gán nhãn chính xác"
+img_003.jpg,20,thua,Huy,"vật chỉ nhìn thấy một phần, không thể gán nhãn chính xác"
 img_003.jpg,6,sai_vi_tri_kich_thuoc,Huy,"box person (conf 0.26) chỉ bao phần mũ/đầu của người đàn ông đeo khẩu trang ngồi trên xe, không bao trọn thân người"
 img_003.jpg,18,thua,Huy,"trùng nhãn: 2 box truck (#18 conf 0.25 và một box conf 0.61) chồng lên cùng một xe ở xa; nên bỏ #18"
 img_006.jpg,91,thua,Huy,"trùng nhãn: box motorbike conf 0.28 trùng với #111 trên cùng chiếc xe máy bánh vàng"
