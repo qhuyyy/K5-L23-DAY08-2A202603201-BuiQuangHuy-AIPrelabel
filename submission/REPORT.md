@@ -32,29 +32,29 @@
 
 ## 3. Thiên kiến tự động hóa và ảnh bẫy
 
-- Bắt bẫy: 9/12 = 75.0% (KTC 95%: 47–91%, dưới ngưỡng 80%); loại nào lọt: extra 1/3 (img_006: box `truck` giả), loose 1/3 (img_025: box `motorbike` bị kéo lệch), wrong_class 1/3 (img_008: `person` bị đổi thành `bicycle`); missing bắt 3/3; *(Số đo trên là của lần duyệt đầu, trước khi mở `traps_key.json`. Sau khi export và xem đáp án, tôi đã sửa 3 bẫy lọt (img_006 xoá box `truck` giả; img_008 đổi lại `person`; img_025 siết box `motorbike`). Bản sửa nằm trong `labels/qc_fixed.json` và chỉ được dùng cho `release/`; `batch_reviewed.json` và `review_stats.*` giữ nguyên lần duyệt đầu để số bắt bẫy không bị thổi phồng.)* vì sao (bạn đã bỏ bước nào của checklist)? <<>>
-- Accepted cao mà bắt bẫy thấp (hoặc ngược lại) nói gì về cách bạn duyệt? <<>>
+- Bắt bẫy: 9/12 = 75.0% (KTC 95%: 47–91%, dưới ngưỡng 80%); loại nào lọt: extra 1/3 (img_006: box `truck` giả), loose 1/3 (img_025: box `motorbike` bị kéo lệch), wrong_class 1/3 (img_008: `person` bị đổi thành `bicycle`); missing bắt 3/3; *(Số đo trên là của lần duyệt đầu, trước khi mở `traps_key.json`. Sau khi export và xem đáp án, tôi đã sửa 3 bẫy lọt (img_006 xoá box `truck` giả; img_008 đổi lại `person`; img_025 siết box `motorbike`). Bản sửa nằm trong `labels/qc_fixed.json` và chỉ được dùng cho `release/`; `batch_reviewed.json` và `review_stats.*` giữ nguyên lần duyệt đầu để số bắt bẫy không bị thổi phồng.)* vì sao (bạn đã bỏ bước nào của checklist)? (1) Tôi không ẩn nhãn máy để quét ảnh trước mà nhìn thẳng vào box máy (bỏ bước 0); (2) box nhỏ / ở xa chỉ nhìn lướt, không kiểm tên lớp từng box — nên `person` bị đổi thành `bicycle` ở img_008 (box chỉ ~30×46 px) lọt qua (bước 3, sai lớp); (3) box trông đúng chỗ, đúng cỡ thì tôi bấm qua, không kiểm cạnh có ôm sát không — nên box lỏng img_025 lọt (bước 4) và box `truck` giả ở img_006 nằm cạnh xe thật trông hợp lý nên không bị xoá (bước 2, thừa); (4) duyệt 24 ảnh trong khoảng 60 phút (2.5 phút/ảnh, nhanh hơn mức ~3 phút GUIDE gợi ý), không nghỉ giữa chừng nên cuối lô vội. Cả 3 bẫy missing đều bắt được: tôi tìm vật sót tốt hơn là nghi ngờ box máy đã có.
+- Accepted cao mà bắt bẫy thấp (hoặc ngược lại) nói gì về cách bạn duyệt? Accepted 75.3% (493/655) đi cùng bắt bẫy 75% (9/12) cho thấy một phần "accepted" là do tôi tin box máy (thiên kiến tự động hoá), không phải do đã kiểm: cả 3 bẫy lọt đều là box máy **có sẵn** (thừa, lỏng, sai lớp), loại lỗi phải nghi ngờ nhãn máy mới thấy. QC cũng xác nhận điều này: 4/6 lỗi còn lại là box thừa của máy tôi chưa xoá. Vì vậy accepted 75% không có nghĩa máy đúng 75%.
 
 ## 4. Máy có đáng dùng không?
 
-- Thời gian (từ `time_log.csv`): gán tay 27/4 = 6.75 phút/ảnh (29/4 = 7.25 nếu tính 2 phút sửa gold) vs duyệt 60/24 = 2.5 phút/ảnh. Thiên lệch (bạn gán gold trước nên đã quen cảnh): <<>>
-- Kết luận: <<có / không / chỉ cho lớp nào>>, dựa trên <<số liệu>>
+- Thời gian (từ `time_log.csv`): gán tay 27/4 = 6.75 phút/ảnh (29/4 = 7.25 nếu tính 2 phút sửa gold) vs duyệt 60/24 = 2.5 phút/ảnh. Thiên lệch (bạn gán gold trước nên đã quen cảnh): so sánh này nghiêng về phía máy — khi duyệt tôi đã quen giao diện CVAT và quen loại cảnh sau 4 ảnh gold; 4 ảnh gold và 24 ảnh batch khác nhau về độ dày vật; và duyệt nhanh một phần là do tôi đã bỏ bớt bước kiểm (xem mục 3), nên 2.5 phút/ảnh là con số lạc quan.
+- Kết luận: **có, trừ `three_wheeler`**, dựa trên: duyệt 2.5 phút/ảnh so với gán tay 6.75 phút/ảnh (nhanh ~2.7 lần) và accepted 75.3% với person / motorbike / car; nhưng `three_wheeler` chỉ 6 accepted so với 25 deleted + 12 edited nên phải kiểm từng box; và vì recall của máy trên gold chỉ 55/71 = 77.5% (máy sót ≈ 85 vật trong batch) nên vẫn phải quét cả ảnh tìm vật sót, không chỉ sửa box máy.
 - **Ba quy tắc giảm thiên kiến của bạn** (mỗi quy tắc kiểm tra được bằng số hoặc việc làm):
-  1. <<>>
-  2. <<>>
-  3. <<>>
+  1. **Ẩn nhãn máy và đếm trước:** mỗi ảnh ẩn nhãn máy, đếm số vật từng lớp và ghi ra, rồi mới bật nhãn máy; số box cuối lệch số đếm thì xem lại. Kiểm tra được: có bảng đếm cho 24/24 ảnh.
+  2. **Kiểm từng box theo danh sách:** dùng danh sách object bên phải CVAT, bấm qua từng box và xác nhận lớp + cạnh, kể cả box nhỏ / ở xa. Kiểm tra được: bắt bẫy ≥ 10/12 (≥ 80%) ở lần sau, đặc biệt bẫy sai lớp và lỏng.
+  3. **Tối thiểu ~3 phút/ảnh, nghỉ sau mỗi 10 ảnh:** không duyệt nhanh hơn mức GUIDE gợi ý. Kiểm tra được: `time_log.csv` ≥ 72 phút cho 24 ảnh, ghi rõ các lần nghỉ.
 
 ## 5. Mask SAM cho 3 vật (Part 5)
 
 | Ảnh | SAM (phiên bản) | Số click | Mask gồm người lái / hàng hoá? | Lỗi quan sát | File trong `masks/` |
 |---|---|---|---|---|---|
-| img_013 (tuk-tuk) | SAM 2.1 b (`sam2.1_b.pt`) | 2 dương + 1 âm (click âm đặt trên người lái) | <<>> | <<>> | `tuktuk_img013.jpg` |
-| img_003 (xe ba bánh bán hoa quả) | SAM 2.1 b | 1 dương + 1 box | <<>> | <<>> | `three_wheeler_img003.jpg` |
-| img_017 (tuk-tuk, lần 1) | SAM 2.1 b | 1 dương, không box | <<>> | <<>> | `three_wheeler_img017.jpg` |
-| img_017 (tuk-tuk, lần 2) | SAM 2.1 b | 3 dương + 1 box | <<>> | <<>> | `three_wheeler_img017_box.jpg` |
+| img_013 (tuk-tuk) | SAM 2.1 b (`sam2.1_b.pt`) | 2 dương + 1 âm (click âm đặt trên người lái) | Có: mask vẫn dính một phần người lái dù đã click âm lên người | Mask phủ trọn xe + mui, nhưng một click âm không đủ tách người lái ngồi sát khung xe | `tuktuk_img013.jpg` |
+| img_003 (xe ba bánh bán hoa quả) | SAM 2.1 b | 1 dương + 1 box | Có: gồm cả hoa quả (đúng CAL-04) và cả hai người ngồi trên xe (sai) | Box gợi ý bao cả người nên SAM gộp người vào mask xe; cần thêm click âm lên từng người | `three_wheeler_img003.jpg` |
+| img_017 (tuk-tuk, lần 1) | SAM 2.1 b | 1 dương, không box | Không (mask quá nhỏ) | Một click chỉ ra một mẩu nhỏ của xe (0.4% ảnh): "một click, nhiều mask" — SAM chọn phần nhỏ nhất quanh điểm click | `three_wheeler_img017.jpg` |
+| img_017 (tuk-tuk, lần 2) | SAM 2.1 b | 3 dương + 1 box | Không có người lái trong xe; không có hàng | Thêm 2 click + box thì mask phủ gần đủ xe (12.6% ảnh), gồm mui và bánh | `three_wheeler_img017_box.jpg` |
 
-- Đối chiếu guideline mục 4.2: quy tắc nào giúp, quy tắc nào thiếu? <<>>
-- *(Tuỳ chọn)* Interactor SAM trong CVAT: làm được / không (lỗi gì, đã thử gì); khác gì offline: <<>>
+- Đối chiếu guideline mục 4.2: quy tắc nào giúp, quy tắc nào thiếu? Quy tắc "hai vật chạm nhau mỗi vật một polygon, không chồng" (4.2.4) và "người là vật riêng" (mục 5) cho biết mask img_013 và img_003 đang sai vì gộp người vào xe. Guideline chưa nói rõ: (a) hàng chất trên xe có thuộc mask không — tôi áp CAL-04 (hàng trong thùng thuộc xe); (b) cần bao nhiêu click / có nên dùng box gợi ý — img_017 cho thấy 1 click là không đủ, nên thêm quy tắc "mỗi vật ≥ 3 click dương + click âm lên người lái / người ngồi trên xe".
+- *(Tuỳ chọn)* Interactor SAM trong CVAT: không thử (không bắt buộc); chỉ dùng `sam2_points.py` offline.
 
 ## 6. Calibration (Part 6)
 
@@ -75,10 +75,10 @@ Nếu Rework / Hold, việc cần làm tiếp: duyệt lại cả 24 ảnh theo 
 
 ## 8. Ghi chú cá nhân
 
-- **Dùng AI để làm bài** (công cụ nào, việc gì, kiểm tra thế nào; "không dùng" nếu không): Claude Code (trợ lý trong VS Code): khôi phục môi trường và chạy các script theo GUIDE; làm trang HTML xem ảnh `viz/` để tôi so sánh các run; chuẩn hoá chính tả / thuật ngữ cột `what_went_right` / `what_went_wrong` trong `model_log.csv` (nội dung quan sát là của tôi), viết nháp cột `decision` và nhận xét r06 / r07 từ output script; tôi đã đọc lại, đối chiếu với ảnh `viz/` và sửa. Ở Part 4–6, Claude chạy `review_stats` / `qc_report`, điền số liệu từ output script vào REPORT và STUDENT.md, đổi mã `error_type` trong `qc_review.csv` theo ghi chú của tôi; Claude giải thích cây Hold → Rework → Release và đưa các phương án calibration kèm khuyến nghị, tôi chọn (Rework; CAL-02/03/04), Claude viết thành câu trong `calibration_decisions.csv`, `guideline_v1.1_calibrated.md` và REPORT mục 6–7.
+- **Dùng AI để làm bài** (công cụ nào, việc gì, kiểm tra thế nào; "không dùng" nếu không): Claude Code (trợ lý trong VS Code): khôi phục môi trường và chạy các script theo GUIDE; làm trang HTML xem ảnh `viz/` để tôi so sánh các run; chuẩn hoá chính tả / thuật ngữ cột `what_went_right` / `what_went_wrong` trong `model_log.csv` (nội dung quan sát là của tôi), viết nháp cột `decision` và nhận xét r06 / r07 từ output script; tôi đã đọc lại, đối chiếu với ảnh `viz/` và sửa. Ở Part 4–6, Claude chạy `review_stats` / `qc_report`, điền số liệu từ output script vào REPORT và STUDENT.md, đổi mã `error_type` trong `qc_review.csv` theo ghi chú của tôi; Claude giải thích cây Hold → Rework → Release và đưa các phương án calibration kèm khuyến nghị, tôi chọn (Rework; CAL-02/03/04), Claude viết thành câu trong `calibration_decisions.csv`, `guideline_v1.1_calibrated.md` và REPORT mục 6–7. Tương tự, nguyên nhân bẫy lọt, kết luận "máy có đáng dùng", 3 quy tắc giảm thiên kiến và nhận xét mask (mục 3–5) là tôi chọn trong các phương án Claude đưa ra (sau khi tự mở ảnh mask kiểm tra), Claude viết thành câu; lý do ngưỡng ở mục 1 do Claude giải thích từ `threshold_sweep.csv`, tôi đồng ý chọn phương án ngưỡng theo lớp.
 - Gold có bị nhiễm không (bạn có nhìn pre-label hay hỏi AI trước khi gán xong)? Không: chưa chạy model nào trước khi export gold. Sau lần export đầu (78 box), `validate_labels` cảnh báo 8 box cao < 20 px; tôi xem lại ảnh, xoá 5 box (img_001: 3 bicycle; img_020: 2 person), giữ 3 person nhỏ (img_001: 2, img_036: 1) vì vẫn nhìn rõ là người (ca khó, xem CAL-01). Sửa mất 2 phút (`time_log.csv` dòng `gold_fix`). Gold cuối: 73 box.
-- Máy / GPU / CVAT dùng; vướng mắc cài đặt: Windows 11 Home, không GPU (torch 2.15 CPU), Python 3.12.10 trong venv riêng (Python mặc định của máy là 3.14, ngoài khoảng 3.10–3.13 nên không dùng); ultralytics 8.4.215; model: yolo26m (tải thêm bằng `download_models.py --set core`), yolo26s, yoloe-26s-seg, sam2.1_b, mobile_sam; chạy hết trên CPU, không cần Colab (yolo26m ~0.9–1.2 s/ảnh, YOLOE ~0.4 s/ảnh, YOLO26+SAM 2.1 ~8.4 s/ảnh); CVAT v2.82.1 chạy bằng Docker (dùng lại stack CVAT có sẵn từ các lab trước thay vì bản 2.81.0 để không hạ cấp database). <<vướng mắc khác nếu có>>
+- Máy / GPU / CVAT dùng; vướng mắc cài đặt: Windows 11 Home, không GPU (torch 2.15 CPU), Python 3.12.10 trong venv riêng (Python mặc định của máy là 3.14, ngoài khoảng 3.10–3.13 nên không dùng); ultralytics 8.4.215; model: yolo26m (tải thêm bằng `download_models.py --set core`), yolo26s, yoloe-26s-seg, sam2.1_b, mobile_sam; chạy hết trên CPU, không cần Colab (yolo26m ~0.9–1.2 s/ảnh, YOLOE ~0.4 s/ảnh, YOLO26+SAM 2.1 ~8.4 s/ảnh); CVAT v2.82.1 chạy bằng Docker (dùng lại stack CVAT có sẵn từ các lab trước thay vì bản 2.81.0 để không hạ cấp database). Thư mục cài đặt `day08` (venv + model) từng bị xoá nhầm vào Thùng rác, đã khôi phục lại.
 - Dùng cache `data/cache/` thay vì tự chạy? Không: tự chạy `y26_all` và `yoloe_all` trên máy (CPU).
 - Sửa nhãn sau khi xem đáp án bẫy: 3 bẫy lọt được sửa vào `labels/qc_fixed.json` (dùng cho release), không chạy lại `review_stats`; xem mục 3.
 - Lỗi / bug script đã gặp (nếu có): không gặp bug script. Lần đầu điền `qc_review.csv` bằng chữ tự do nên `qc_report.py` bỏ qua cả 5 dòng; đã đổi sang mã `error_type` hợp lệ.
-- Một điều bạn làm khác lần sau: <<>>
+- Một điều bạn làm khác lần sau: luôn ẩn nhãn máy và quét / đếm vật trước khi xem box máy, vì cả 3 bẫy lọt đều là box máy có sẵn mà tôi đã tin theo.
